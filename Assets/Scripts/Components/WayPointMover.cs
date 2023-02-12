@@ -47,12 +47,11 @@ public class WayPointMover : MonoBehaviour
 
     public void MoveToNextWaypoint()
     {
-        var nextWayPoint = new Vector2(_waypoints[_currentWaypointIndx].position.x, _waypoints[_currentWaypointIndx].position.y);
-        var tempPosition = Vector2.Lerp(_rigidbody.position, nextWayPoint, speed * Time.deltaTime);
-        _rigidbody.MovePosition(tempPosition);
+        var nextWayPoint = new Vector3(_waypoints[_currentWaypointIndx].position.x, _waypoints[_currentWaypointIndx].position.y);
+        var distance = nextWayPoint - transform.position;
+        transform.position += distance.normalized * speed * Time.deltaTime;
         //Проверим, достигли ли текущего waypoint и если да, то перейдём к следующему
-        var moveDirection = nextWayPoint - _rigidbody.position;
-        if (moveDirection.magnitude < 0.2f)
+        if (distance.magnitude < 0.2f)
             _currentWaypointIndx++;
     }
 }
