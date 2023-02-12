@@ -4,6 +4,14 @@
         int WaveCounts { get; }
         int CurrentWave { get; }
 
+        public enum GameResult
+        {
+            NotStarted,
+            InBuildProcess,
+            InProcess,
+            Victory,
+            Lose
+        }
         void StartGame();
-        Game.GameResult Status { get; }
+        GameResult Status { get; }
     }

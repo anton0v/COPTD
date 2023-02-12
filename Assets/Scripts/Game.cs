@@ -34,11 +34,11 @@ public class Game : MonoBehaviour, IGame
 
     private bool gameIsEnd;
 
-    private GameResult _status;
+    private IGame.GameResult _status;
     /// <summary>
     /// Текущий статус игры - в процессе, проигрыш, выигрыш
     /// </summary>
-    public GameResult Status { get { return _status; } }
+    public IGame.GameResult Status { get { return _status; } }
 
     /// <summary>
     /// Прототип для инстанционирования первого типа - простой крип
@@ -65,14 +65,6 @@ public class Game : MonoBehaviour, IGame
     private IHittable _keep;
 
     private ITowerBuilder _builder;
-    public enum GameResult
-    {
-        NotStarted,
-        InBuildProcess,
-        InProcess,
-        Victory,
-        Lose
-    }
 
     public void Awake()
     {
@@ -86,7 +78,7 @@ public class Game : MonoBehaviour, IGame
         _builder = FindObjectOfType<TowerBuilder>();
         _keep = GameObject.FindGameObjectWithTag("Keep").GetComponent<HaveHitPoint>();
         gameIsEnd = false;
-        _status = GameResult.InBuildProcess;
+        _status = IGame.GameResult.InBuildProcess;
         _builder.ShowUI = true;
     }
 
@@ -96,10 +88,10 @@ public class Game : MonoBehaviour, IGame
     public void OnTowersIsBuild()
     {
         StartCoroutine(spawnEnemys());
-        _status = GameResult.InProcess;
+        _status = IGame.GameResult.InProcess;
     }
 
-    private void GameOver(GameResult result)
+    private void GameOver(IGame.GameResult result)
     {
         gameIsEnd = true;
         _status = result;
@@ -126,12 +118,12 @@ public class Game : MonoBehaviour, IGame
     /// </summary>
     public void Update()
     {
-        if (Status == GameResult.NotStarted 
-            || Status == GameResult.InBuildProcess
+        if (Status == IGame.GameResult.NotStarted 
+            || Status == IGame.GameResult.InBuildProcess
             || gameIsEnd) return;
         
         if(_keep.IsDead) 
-            GameOver(GameResult.Lose);
+            GameOver(IGame.GameResult.Lose);
 
         var allDead = _allEnemies.FindAll(enemy => enemy.IsDead);
         if (allDead.Count == _allEnemies.Count)
@@ -139,7 +131,7 @@ public class Game : MonoBehaviour, IGame
             if(CurrentWave < WaveCounts)
                 StartCoroutine(spawnEnemys());
             else
-                GameOver(GameResult.Victory);
+                GameOver(IGame.GameResult.Victory);
         }
     }
 }
