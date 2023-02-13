@@ -28,8 +28,9 @@ public class AtackTrigger : MonoBehaviour
     {
         var enemy = other.GetComponent<HaveHitPoint>();
         if (enemy == null) return;
-        SendMessage("RemoveCript", enemy);
+        //SendMessage("RemoveCript", enemy);
         _damager.EndDPS();
+        CurrentTargetLose(enemy);
     }
 
     /// <summary>
