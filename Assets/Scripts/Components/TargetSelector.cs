@@ -20,7 +20,7 @@ public class TargetSelector : MonoBehaviour, ITargetSelector
     /// <param name="enemy"></param>
     public virtual void AddCript(IHittable enemy)
     {
-        var go = enemy as HaveHitPoint;
+        var go = enemy as MonoBehaviour;
         if (go.gameObject.tag != "Enemy") return;
         allEnemy.Add(enemy);
     }

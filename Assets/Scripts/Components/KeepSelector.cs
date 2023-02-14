@@ -10,7 +10,7 @@ public class KeepSelector : TargetSelector
     /// <param name="enemy"></param>
     public override void AddCript(IHittable enemy)
     {
-        var go = enemy as HaveHitPoint;
+        var go = enemy as MonoBehaviour;
         if (go.gameObject.tag != "Keep") return;
         allEnemy.Add(enemy);
     }
@@ -21,7 +21,7 @@ public class KeepSelector : TargetSelector
     /// <param name="enemy"></param>
     public override void RemoveCript(IHittable enemy)
     {
-       
+       allEnemy.Remove(enemy);
     }
 }
 
